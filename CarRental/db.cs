@@ -13,7 +13,7 @@ namespace CarRental
 {
     internal class db
     {
-        public static string connect = @"server=localhost;port=3306;username=root;password=;database=carRental";
+        public static string connect = @"server=localhost;port=3306;username=root;password=root;database=carRental";
         MySqlConnection connection = new MySqlConnection(connect); 
 
         public DataTable MySqlReturnData(string query,DataGridView grid)
@@ -60,7 +60,7 @@ namespace CarRental
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
-            hashPassword = HashPassword(password);
+            hashPassword = GetHashPass(password);
 
             try
             {
@@ -82,19 +82,29 @@ namespace CarRental
 
             return role;
         }
-        public static string HashPassword(string password)
+        public static string GetHashPass(string password)
         {
-            using (var sha256 = SHA256.Create())
+
+            byte[] bytesPass = Encoding.UTF8.GetBytes(password);
+
+            SHA256Managed hashstring = new SHA256Managed();
+
+            byte[] hash = hashstring.ComputeHash(bytesPass);
+
+            string hashPasswd = string.Empty;
+
+            foreach (byte x in hash)
             {
-                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                foreach (byte b in bytes)
-                {
-                    builder.Append(b.ToString("x2"));
-                }
-                return builder.ToString();
+
+                hashPasswd += String.Format("{0:x2}", x);
             }
+
+            hashstring.Dispose();
+
+            return hashPasswd;
         }
+
+
         public bool CharCorrectEng(char c)
         {
             return (c >= 'a' && c <= 'z') ||

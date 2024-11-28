@@ -111,7 +111,8 @@ namespace CarRental
         {
             button7.Visible = true;
             button8.Visible = true;
-            button9.Visible = false;
+            button9.Visible = true;
+            button9.Text = "Создание чека";
             button4.BackColor = Color.FromArgb(92, 96, 255);
             button4.ForeColor = Color.FromArgb(34, 36, 49);
             button2.BackColor = Color.FromArgb(34, 36, 49);

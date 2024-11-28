@@ -86,9 +86,9 @@ namespace CarRental
             string query = "SELECT first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', driver_license as 'Вод.Удостоверение', passport as 'Паспорт' FROM customers";
             table = "customers";
             db.MySqlReturnData(query, dataGridView1);
-            button7.Visible = true;
-            button8.Visible = true;
-            button9.Visible = true;
+            button7.Visible = false;
+            button8.Visible = false;
+            button9.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -164,7 +164,7 @@ namespace CarRental
             comboBox1.Items.Add("По менеджеру");
             comboBox1.Items.Add("По дате возврата");
             comboBox1.Items.Add("По сумме");
-            string query = "SELECT customers.passport as 'Клиент', cars.license_plate as 'Машина', rentals.rental_date as 'Дата взятия', employee.employeeLogin as 'Менеджер',rentals.return_date as 'Дата возвращения', rentals.total_amount as 'Сумма' FROM rentals JOIN customers ON rentals.customer_id = customers.customer_id JOIN cars ON rentals.car_id = cars.car_id JOIN employee ON rentals.employee_id = employee.employee_id;";
+            string query = "Select make as 'Марка', model as 'Модель', first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', rental_date as 'Дата взятия', return_date as 'Дата возврата', total_amount as 'Сумма' FROM carrental.rentals inner join customers on rentals.customer_id = customers.customer_id inner join cars on cars.car_id = rentals.car_id; ";
             table = "rentals";
             db.MySqlReturnData(query, dataGridView1);
             button7.Visible = false;
@@ -475,7 +475,7 @@ namespace CarRental
         }
         private void DeleteRowFromDatabase(DataGridViewRow row)
         {
-            int id = Convert.ToInt32(row.Cells["Имя"].Value);
+            int id = Convert.ToInt32(row.Cells["Логин"].Value);
         }
         private void button9_Click(object sender, EventArgs e)
         {

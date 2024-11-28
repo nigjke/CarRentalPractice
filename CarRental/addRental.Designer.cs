@@ -29,9 +29,9 @@ namespace CarRental
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBoxCustomers = new System.Windows.Forms.ComboBox();
-            this.comboBoxCars = new System.Windows.Forms.ComboBox();
-            this.comboBoxEmployees = new System.Windows.Forms.ComboBox();
+            this.comboBoxMake = new System.Windows.Forms.ComboBox();
+            this.comboBoxModel = new System.Windows.Forms.ComboBox();
+            this.comboBoxCustomer = new System.Windows.Forms.ComboBox();
             this.dateTimePickerRentalDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerReturnDate = new System.Windows.Forms.DateTimePicker();
             this.textBoxTotalAmount = new System.Windows.Forms.TextBox();
@@ -39,70 +39,71 @@ namespace CarRental
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // comboBoxCustomers
+            // comboBoxMake
             // 
-            this.comboBoxCustomers.FormattingEnabled = true;
-            this.comboBoxCustomers.Location = new System.Drawing.Point(268, 93);
-            this.comboBoxCustomers.Name = "comboBoxCustomers";
-            this.comboBoxCustomers.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxCustomers.TabIndex = 0;
+            this.comboBoxMake.FormattingEnabled = true;
+            this.comboBoxMake.Location = new System.Drawing.Point(49, 47);
+            this.comboBoxMake.Name = "comboBoxMake";
+            this.comboBoxMake.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxMake.TabIndex = 0;
+            this.comboBoxMake.SelectedIndexChanged += new System.EventHandler(this.comboBoxMake_SelectedIndexChanged);
             // 
-            // comboBoxCars
+            // comboBoxModel
             // 
-            this.comboBoxCars.FormattingEnabled = true;
-            this.comboBoxCars.Location = new System.Drawing.Point(268, 164);
-            this.comboBoxCars.Name = "comboBoxCars";
-            this.comboBoxCars.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxCars.TabIndex = 1;
+            this.comboBoxModel.FormattingEnabled = true;
+            this.comboBoxModel.Location = new System.Drawing.Point(49, 97);
+            this.comboBoxModel.Name = "comboBoxModel";
+            this.comboBoxModel.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxModel.TabIndex = 1;
             // 
-            // comboBoxEmployees
+            // comboBoxCustomer
             // 
-            this.comboBoxEmployees.FormattingEnabled = true;
-            this.comboBoxEmployees.Location = new System.Drawing.Point(268, 247);
-            this.comboBoxEmployees.Name = "comboBoxEmployees";
-            this.comboBoxEmployees.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxEmployees.TabIndex = 2;
+            this.comboBoxCustomer.FormattingEnabled = true;
+            this.comboBoxCustomer.Location = new System.Drawing.Point(49, 157);
+            this.comboBoxCustomer.Name = "comboBoxCustomer";
+            this.comboBoxCustomer.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCustomer.TabIndex = 2;
             // 
             // dateTimePickerRentalDate
             // 
-            this.dateTimePickerRentalDate.Location = new System.Drawing.Point(233, 129);
+            this.dateTimePickerRentalDate.Location = new System.Drawing.Point(30, 234);
             this.dateTimePickerRentalDate.Name = "dateTimePickerRentalDate";
             this.dateTimePickerRentalDate.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerRentalDate.TabIndex = 3;
             // 
             // dateTimePickerReturnDate
             // 
-            this.dateTimePickerReturnDate.Location = new System.Drawing.Point(224, 208);
+            this.dateTimePickerReturnDate.Location = new System.Drawing.Point(30, 297);
             this.dateTimePickerReturnDate.Name = "dateTimePickerReturnDate";
             this.dateTimePickerReturnDate.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerReturnDate.TabIndex = 4;
+            this.dateTimePickerReturnDate.ValueChanged += new System.EventHandler(this.dateTimePickerReturnDate_ValueChanged);
             // 
             // textBoxTotalAmount
             // 
-            this.textBoxTotalAmount.Location = new System.Drawing.Point(268, 300);
+            this.textBoxTotalAmount.Location = new System.Drawing.Point(49, 354);
             this.textBoxTotalAmount.Name = "textBoxTotalAmount";
             this.textBoxTotalAmount.Size = new System.Drawing.Size(100, 20);
             this.textBoxTotalAmount.TabIndex = 5;
             // 
             // buttonAddRental
             // 
-            this.buttonAddRental.Location = new System.Drawing.Point(277, 365);
+            this.buttonAddRental.Location = new System.Drawing.Point(49, 408);
             this.buttonAddRental.Name = "buttonAddRental";
             this.buttonAddRental.Size = new System.Drawing.Size(75, 20);
             this.buttonAddRental.TabIndex = 6;
             this.buttonAddRental.Text = "button1";
             this.buttonAddRental.UseVisualStyleBackColor = true;
-            this.buttonAddRental.Click += new System.EventHandler(this.buttonAddRental_Click_1);
+            this.buttonAddRental.Click += new System.EventHandler(this.buttonAddRental_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(268, 408);
+            this.button1.Location = new System.Drawing.Point(49, 479);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 20);
             this.button1.TabIndex = 7;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // addRental
             // 
@@ -115,9 +116,9 @@ namespace CarRental
             this.Controls.Add(this.textBoxTotalAmount);
             this.Controls.Add(this.dateTimePickerReturnDate);
             this.Controls.Add(this.dateTimePickerRentalDate);
-            this.Controls.Add(this.comboBoxEmployees);
-            this.Controls.Add(this.comboBoxCars);
-            this.Controls.Add(this.comboBoxCustomers);
+            this.Controls.Add(this.comboBoxCustomer);
+            this.Controls.Add(this.comboBoxModel);
+            this.Controls.Add(this.comboBoxMake);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "addRental";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -129,9 +130,9 @@ namespace CarRental
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBoxCustomers;
-        private System.Windows.Forms.ComboBox comboBoxCars;
-        private System.Windows.Forms.ComboBox comboBoxEmployees;
+        private System.Windows.Forms.ComboBox comboBoxMake;
+        private System.Windows.Forms.ComboBox comboBoxModel;
+        private System.Windows.Forms.ComboBox comboBoxCustomer;
         private System.Windows.Forms.DateTimePicker dateTimePickerRentalDate;
         private System.Windows.Forms.DateTimePicker dateTimePickerReturnDate;
         private System.Windows.Forms.TextBox textBoxTotalAmount;
