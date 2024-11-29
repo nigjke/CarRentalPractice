@@ -34,7 +34,7 @@ namespace CarRental
                 comboBoxMake.DataSource = dataTableMake;
                 comboBoxMake.DisplayMember = "make";
 
-                string queryCustomers = "SELECT customer_id, last_name FROM customers";
+                string queryCustomers = "SELECT customer_id, last_name,phone FROM customers";
                 MySqlDataAdapter adapterCustomers = new MySqlDataAdapter(queryCustomers, connection);
                 DataTable dataTableCustomers = new DataTable();
                 adapterCustomers.Fill(dataTableCustomers);
@@ -42,23 +42,6 @@ namespace CarRental
                 comboBoxCustomer.DisplayMember = "last_name";
                 comboBoxCustomer.ValueMember = "customer_id";
 
-            }
-        }
-
-        private void comboBoxMake_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string selectedMake = comboBoxMake.Text;
-            string queryModel = "SELECT model FROM cars WHERE make = @make";
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                MySqlCommand command = new MySqlCommand(queryModel, connection);
-                command.Parameters.AddWithValue("@make", selectedMake);
-                MySqlDataAdapter adapterModel = new MySqlDataAdapter(command);
-                DataTable dataTableModel = new DataTable();
-                adapterModel.Fill(dataTableModel);
-                comboBoxModel.DataSource = dataTableModel;
-                comboBoxModel.DisplayMember = "model";
             }
         }
         private void CalculateTotalAmount()
@@ -101,28 +84,6 @@ namespace CarRental
                 textBoxTotalAmount.Text = totalAmount.ToString("C");
             }
         }
-
-        private void buttonAddRental_Click(object sender, EventArgs e)
-        {
-            string connectionString = db.connect;
-            string query = "INSERT INTO rentals (customer_id, car_id, rental_date, return_date, total_amount) VALUES (@customer_id, @car_id, @rental_date, @return_date, @total_amount)";
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@customer_id", comboBoxCustomer.SelectedValue);
-                command.Parameters.AddWithValue("@car_id", GetCarId(comboBoxMake.Text, comboBoxModel.Text));
-                command.Parameters.AddWithValue("@rental_date", dateTimePickerRentalDate.Value);
-                command.Parameters.AddWithValue("@return_date", dateTimePickerReturnDate.Value);
-                command.Parameters.AddWithValue("@total_amount", decimal.Parse(textBoxTotalAmount.Text, NumberStyles.Currency));
-
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-
-            this.Close();
-        }
-
         private int GetCarId(string make, string model)
         {
             string connectionString = db.connect;
@@ -137,12 +98,78 @@ namespace CarRental
                 return (int)command.ExecuteScalar();
             }
         }
+        private void comboBoxMake_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            string selectedMake = comboBoxMake.Text;
+            string queryModel = "SELECT model FROM cars WHERE make = @make";
 
-        private void dateTimePickerReturnDate_ValueChanged(object sender, EventArgs e)
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                MySqlCommand command = new MySqlCommand(queryModel, connection);
+                command.Parameters.AddWithValue("@make", selectedMake);
+                MySqlDataAdapter adapterModel = new MySqlDataAdapter(command);
+                DataTable dataTableModel = new DataTable();
+                adapterModel.Fill(dataTableModel);
+                comboBoxModel.DataSource = dataTableModel;
+                comboBoxModel.DisplayMember = "model";
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (comboBoxModel.Text != "" && comboBoxCustomer.Text != "" && comboBoxMake.Text != "" && dateTimePickerRentalDate.Text != "" && dateTimePickerReturnDate.Text != "" && textBoxTotalAmount.Text != "")
+            {
+                string connectionString = db.connect;
+                string query = "INSERT INTO rentals (customer_id, car_id, rental_date, return_date, total_amount) VALUES (@customer_id, @car_id, @rental_date, @return_date, @total_amount)";
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@customer_id", comboBoxCustomer.SelectedValue);
+                    command.Parameters.AddWithValue("@car_id", GetCarId(comboBoxMake.Text, comboBoxModel.Text));
+                    command.Parameters.AddWithValue("@rental_date", dateTimePickerRentalDate.Value);
+                    command.Parameters.AddWithValue("@return_date", dateTimePickerReturnDate.Value);
+                    command.Parameters.AddWithValue("@total_amount", decimal.Parse(textBoxTotalAmount.Text, NumberStyles.Currency));
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Заполните все поля");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void dateTimePickerReturnDate_ValueChanged_1(object sender, EventArgs e)
         {
             CalculateTotalAmount();
         }
+
+        private void addRental_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxCustomer.SelectedIndex != -1)
+            {
+                DataRowView selectedRow = comboBoxCustomer.SelectedItem as DataRowView;
+                if (selectedRow != null)
+                {
+                    textPhone.Text = selectedRow["phone"].ToString();
+                }
+            }
+        }
     }
-       
 }
+   
 
