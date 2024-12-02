@@ -40,7 +40,11 @@ namespace CarRental
 
         private void exitBtn_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            DialogResult result = MessageBox.Show("Вы уверены, что хотите выйти?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
         private void adminForm_Load(object sender, EventArgs e)
         {
@@ -86,9 +90,9 @@ namespace CarRental
             string query = "SELECT first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', driver_license as 'Вод.Удостоверение', passport as 'Паспорт' FROM customers";
             table = "customers";
             db.MySqlReturnData(query, dataGridView1);
-            button7.Visible = true;
-            button8.Visible = true;
-            button9.Visible = true;
+            button7.Visible = false;
+            button8.Visible = false;
+            button9.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -164,7 +168,7 @@ namespace CarRental
             comboBox1.Items.Add("По менеджеру");
             comboBox1.Items.Add("По дате возврата");
             comboBox1.Items.Add("По сумме");
-            string query = "SELECT customers.passport as 'Клиент', cars.license_plate as 'Машина', rentals.rental_date as 'Дата взятия', employee.employeeLogin as 'Менеджер',rentals.return_date as 'Дата возвращения', rentals.total_amount as 'Сумма' FROM rentals JOIN customers ON rentals.customer_id = customers.customer_id JOIN cars ON rentals.car_id = cars.car_id JOIN employee ON rentals.employee_id = employee.employee_id;";
+            string query = "Select make as 'Марка', model as 'Модель', first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', rental_date as 'Дата взятия', return_date as 'Дата возврата', total_amount as 'Сумма' FROM carrental.rentals inner join customers on rentals.customer_id = customers.customer_id inner join cars on cars.car_id = rentals.car_id; ";
             table = "rentals";
             db.MySqlReturnData(query, dataGridView1);
             button7.Visible = false;
@@ -377,15 +381,15 @@ namespace CarRental
                 string query = "";
                 if (table == "customers")
                 {
-                     query = "SELECT first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', driver_license as 'Вод.Удостоверение', passport as 'Паспорт' FROM customers";
+                    query = "SELECT first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', driver_license as 'Вод.Удостоверение', passport as 'Паспорт' FROM customers";
                 }
                 else if (table == "cars")
                 {
-                     query = "SELECT make as 'Марка', model as 'Модель', year as 'Год выпуска', license_plate as 'Гос.Номер', status as 'Статус' , price 'Цена за сутки' FROM cars";
+                    query = "SELECT make as 'Марка', model as 'Модель', year as 'Год выпуска', license_plate as 'Гос.Номер', status as 'Статус' , price 'Цена за сутки' FROM cars";
                 }
                 else
                 {
-                     query = "SELECT employee.firstName as 'Имя', employee.lastName as 'Фамилия', employee.phone as 'Телефон', role.name as 'Роль', employee.employeeLogin as 'Логин', employee.employeePass as 'Пароль' FROM employee JOIN role ON employee.Role_id=role.Role_id";
+                    query = "SELECT employee.firstName as 'Имя', employee.lastName as 'Фамилия', employee.phone as 'Телефон', role.name as 'Роль', employee.employeeLogin as 'Логин', employee.employeePass as 'Пароль' FROM employee JOIN role ON employee.Role_id=role.Role_id";
                 }
                 MySqlCommand command = new MySqlCommand(query, connection);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
@@ -398,46 +402,46 @@ namespace CarRental
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                    DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-                    bool isEmptyRow = true;
-                    foreach (DataGridViewCell cell in selectedRow.Cells)
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                bool isEmptyRow = true;
+                foreach (DataGridViewCell cell in selectedRow.Cells)
+                {
+                    if (cell.Value != null && !string.IsNullOrWhiteSpace(cell.Value.ToString()))
                     {
-                        if (cell.Value != null && !string.IsNullOrWhiteSpace(cell.Value.ToString()))
-                        {
-                            isEmptyRow = false;
-                            break;
-                        }
+                        isEmptyRow = false;
+                        break;
                     }
+                }
 
-                    if (isEmptyRow)
-                    {
-                        MessageBox.Show("Выбранная строка пуста и не может быть отредактирована.");
-                        return;
-                    }
+                if (isEmptyRow)
+                {
+                    MessageBox.Show("Выбранная строка пуста и не может быть отредактирована.");
+                    return;
+                }
                 if (table == "customers")
+                {
+                    editCustomer editCustomer = new editCustomer(selectedRow);
+                    if (editCustomer.ShowDialog() == DialogResult.OK)
                     {
-                        editCustomer editCustomer = new editCustomer(selectedRow);
-                        if (editCustomer.ShowDialog() == DialogResult.OK)
-                        {
-                            LoadData();
-                        }              
+                        LoadData();
                     }
-                    else if (table == "cars")
+                }
+                else if (table == "cars")
+                {
+                    editCar editCar = new editCar(selectedRow);
+                    if (editCar.ShowDialog() == DialogResult.OK)
                     {
-                        editCar editCar = new editCar(selectedRow);
-                        if (editCar.ShowDialog() == DialogResult.OK)
-                        {
-                            LoadData();
-                        }
+                        LoadData();
                     }
-                    else if (table == "employee")
+                }
+                else if (table == "employee")
+                {
+                    editEmployee editEmployee = new editEmployee(selectedRow);
+                    if (editEmployee.ShowDialog() == DialogResult.OK)
                     {
-                        editEmployee editEmployee = new editEmployee(selectedRow);
-                        if (editEmployee.ShowDialog() == DialogResult.OK)
-                        {
-                            LoadData();
-                        }
+                        LoadData();
                     }
+                }
             }
             else
             {
@@ -452,7 +456,7 @@ namespace CarRental
             if (table == "cars") { query = $"SELECT make as 'Марка', model as 'Модель', year as 'Год выпуска', license_plate as 'Гос.Номер', status as 'Статус', price 'Цена за сутки' FROM cars WHERE make LIKE '%{txt}%' OR model LIKE '%{txt}%' OR license_plate LIKE '%{txt}%' OR status LIKE '%{txt}%' OR year LIKE '%{txt}%' OR price LIKE '%{txt}%'"; }
             else if (table == "customers") { query = $"SELECT first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', driver_license as 'Вод.Удостоверение', passport as 'Паспорт' FROM customers WHERE first_name LIKE '%{txt}%' OR last_name LIKE '%{txt}%' OR phone LIKE '%{txt}%' OR driver_license LIKE '%{txt}%' OR passport LIKE '%{txt}%'"; }
             else if (table == "employee") { query = $"SELECT firstName as 'Имя', lastName as 'Фамилия', phone as 'Телефон', Role_id as 'Роль', employeeLogin as 'Логин', employeePass as 'Пароль' FROM employee WHERE firstName LIKE '%{txt}%' OR lastName LIKE '%{txt}%' OR phone LIKE '%{txt}%' OR employeeLogin LIKE '%{txt}%' OR employeePass LIKE '%{txt}%' OR Role_id LIKE '%{txt}%'"; }
-            else if (table == "rentals") {query = $"SELECT customers.passport as 'Клиент', cars.license_plate as 'Машина', rentals.rental_date as 'Дата взятия', employee.employeeLogin as 'Менеджер',rentals.return_date as 'Дата возвращения', rentals.total_amount as 'Сумма' FROM rentals JOIN customers ON rentals.customer_id = customers.customer_id JOIN cars ON rentals.car_id = cars.car_id JOIN employee ON rentals.employee_id = employee.employee_id;"; }
+            else if (table == "rentals") { query = $"SELECT customers.passport as 'Клиент', cars.license_plate as 'Машина', rentals.rental_date as 'Дата взятия', employee.employeeLogin as 'Менеджер',rentals.return_date as 'Дата возвращения', rentals.total_amount as 'Сумма' FROM rentals JOIN customers ON rentals.customer_id = customers.customer_id JOIN cars ON rentals.car_id = cars.car_id JOIN employee ON rentals.employee_id = employee.employee_id;"; }
             db.MySqlReturnData(query, dataGridView1);
         }
 
@@ -475,42 +479,70 @@ namespace CarRental
         }
         private void DeleteRowFromDatabase(DataGridViewRow row)
         {
-            int id = Convert.ToInt32(row.Cells["Имя"].Value);
+            int id = Convert.ToInt32(row.Cells["Логин"].Value);
         }
         private void button9_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-                bool isEmptyRow = true;
+                var selectedRow = dataGridView1.SelectedRows[0];
+                bool isEmpty = true;
                 foreach (DataGridViewCell cell in selectedRow.Cells)
                 {
                     if (cell.Value != null && !string.IsNullOrWhiteSpace(cell.Value.ToString()))
                     {
-                        isEmptyRow = false;
+                        isEmpty = false;
                         break;
                     }
                 }
-
-                if (isEmptyRow)
+                if (isEmpty)
                 {
-                    MessageBox.Show("Выбранная строка пуста и не может быть удалена.");
+                    MessageBox.Show("Выбранная строка пуста и не может быть удалена.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-                DialogResult result = MessageBox.Show("Вы уверены, что хотите удалить эту запись?", "Подтверждение удаления", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
+                if (table == "cars")
+                {
+                    if (IsDataUsedInRentals(selectedRow))
+                    {
+                        MessageBox.Show("Данные из выбранной строки используются в других таблицах и не могут быть удалены.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                var result = MessageBox.Show("Вы уверены, что хотите удалить выбранную строку?", "Подтверждение удаления", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    DeleteRowFromDatabase(selectedRow);
-
                     dataGridView1.Rows.Remove(selectedRow);
                 }
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите строку для удаления.");
+                MessageBox.Show("Пожалуйста, выберите строку для удаления.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private bool IsDataUsedInRentals(DataGridViewRow row)
+        {
+            string carId = row.Cells["Модель"].Value?.ToString();
+            if (carId != null)
+            {
+                using (MySqlConnection conn = new MySqlConnection(db.connect))
+                {
+                    try
+                    {
+                        conn.Open();
+                        string query = "SELECT COUNT(*) FROM carrental.rentals INNER JOIN cars ON cars.car_id = rentals.car_id WHERE cars.model = @carId;";
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@carId", carId);
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка при проверке данных: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

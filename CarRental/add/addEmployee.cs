@@ -22,27 +22,6 @@ namespace CarRental
         {
             InitializeComponent();
         }
-        public static string GetHashPass(string password)
-        {
-
-            byte[] bytesPass = Encoding.UTF8.GetBytes(password);
-
-            SHA256Managed hashstring = new SHA256Managed();
-
-            byte[] hash = hashstring.ComputeHash(bytesPass);
-
-            string hashPasswd = string.Empty;
-
-            foreach (byte x in hash)
-            {
-
-                hashPasswd += String.Format("{0:x2}", x);
-            }
-
-            hashstring.Dispose();
-
-            return hashPasswd;
-        }
         private void addEmployee_Load(object sender, EventArgs e)
         {
             DataTable Rooms = new DataTable();
@@ -63,6 +42,7 @@ namespace CarRental
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            string password = GetHashPass(textBox4.Text.ToString());
             if (textBox1.Text != "" && textBox2.Text != "" && textBox4.Text != "" && textBox4.Text != "" && maskedTextBox1.Text != "" && comboBox1.Text != "")
             {
                 string role = comboBox1.Text;
@@ -81,7 +61,7 @@ namespace CarRental
                     des1 = Convert.ToInt32(Rooms.Rows[i]["Role_id"]);
                 }
 
-                string sqlQuery = $@"Insert Into employee(Role_id,firstName,lastName,phone,employeeLogin,employeePass) Values ('{des1}','{textBox1.Text}','{textBox2.Text}','{maskedTextBox1.Text}','{textBox3.Text}','{textBox4.Text}')";
+                string sqlQuery = $@"Insert Into employee(Role_id,firstName,lastName,phone,employeeLogin,employeePass) Values ('{des1}','{textBox1.Text}','{textBox2.Text}','{maskedTextBox1.Text}','{textBox3.Text}','{password}')";
                 using (MySqlConnection con = new MySqlConnection())
                 {
                     con.ConnectionString = connect;
@@ -117,6 +97,42 @@ namespace CarRental
         private void button2_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+        public static string GetHashPass(string password)
+        {
+
+            byte[] bytesPass = Encoding.UTF8.GetBytes(password);
+
+            SHA256Managed hashstring = new SHA256Managed();
+
+            byte[] hash = hashstring.ComputeHash(bytesPass);
+
+            string hashPasswd = string.Empty;
+
+            foreach (byte x in hash)
+            {
+
+                hashPasswd += String.Format("{0:x2}", x);
+            }
+
+            hashstring.Dispose();
+
+            return hashPasswd;
+        }
+        public string CreatePassword(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyz_-ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+            return res.ToString();
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            textBox4.Text = CreatePassword(15);
         }
     }
 }
