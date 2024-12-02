@@ -15,7 +15,6 @@ namespace CarRental
     {
         private db db;
         private static string table = string.Empty;
-        private int selectedRowIndex;
         public managerForm(string labelLog)
         {
             db = new db();

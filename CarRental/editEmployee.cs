@@ -26,30 +26,12 @@ namespace CarRental
             InitializeComponent();
             LoadData();
         }
-
-        private void editEmployee_Load(object sender, EventArgs e)
-        {
-            DataTable Rooms = new DataTable();
-            using (MySqlConnection coon = new MySqlConnection(connect))
-            {
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = coon;
-                cmd.CommandText = "select name from `role`";
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(Rooms);
-            }
-
-            for (int i = 0; i < Rooms.Rows.Count; i++)
-            {
-                comboBox1.Items.Add(Rooms.Rows[i]["name"]);
-            }
-        }
         private void LoadData()
         {
-            comboBox1.SelectedItem = selectedRow.Cells["Роль"].Value.ToString();
             textBox1.Text = selectedRow.Cells["Имя"].Value.ToString();
             textBox2.Text = selectedRow.Cells["Фамилия"].Value.ToString();
             maskedTextBox1.Text = selectedRow.Cells["Телефон"].Value.ToString();
+            comboBox1.SelectedItem = selectedRow.Cells["Роль"].Value.ToString();
             textBox3.Text = selectedRow.Cells["Логин"].Value.ToString();
             textBox4.Text = selectedRow.Cells["Пароль"].Value.ToString();
         }
@@ -149,69 +131,14 @@ namespace CarRental
             }
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void textBox1_Leave(object sender, EventArgs e)
         {
-
+            textBox1.Text = char.ToUpper(textBox1.Text[0]) + textBox1.Text.Substring(1);
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void textBox2_Leave(object sender, EventArgs e)
         {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
+            textBox2.Text = char.ToUpper(textBox2.Text[0]) + textBox2.Text.Substring(1);
         }
     }
 }
