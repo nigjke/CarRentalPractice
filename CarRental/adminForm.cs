@@ -40,7 +40,11 @@ namespace CarRental
 
         private void exitBtn_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            DialogResult result = MessageBox.Show("Вы уверены, что хотите выйти?", "Подтверждение выхода", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
         private void adminForm_Load(object sender, EventArgs e)
         {
