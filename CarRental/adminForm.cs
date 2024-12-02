@@ -544,5 +544,11 @@ namespace CarRental
             }
             return false;
         }
+
+        private void reportBtn_Click(object sender, EventArgs e)
+        {
+            sysAdminForm sysAdminForm = new sysAdminForm();
+            sysAdminForm.ShowDialog();
+        }
     }
 }
