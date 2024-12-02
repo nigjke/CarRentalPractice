@@ -16,8 +16,10 @@ namespace CarRental
     public partial class addCar : Form
     {
         string connect = db.connect;
+        private db db;
         public addCar()
         {
+            db = new db();
             InitializeComponent();
         }
         private void button1_Click_1(object sender, EventArgs e)
@@ -47,6 +49,37 @@ namespace CarRental
         private void button2_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            textBox1.Text = char.ToUpper(textBox1.Text[0]) + textBox1.Text.Substring(1);
+        }
+
+        private void textBox2_Leave(object sender, EventArgs e)
+        {
+            textBox2.Text = char.ToUpper(textBox2.Text[0]) + textBox2.Text.Substring(1);
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!db.CharCorrectEng(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!db.CharCorrectEng(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void maskedTextBox1_Leave(object sender, EventArgs e)
+        {
+            maskedTextBox1.Text = char.ToUpper(maskedTextBox1.Text[3]) + maskedTextBox1.Text.Substring(4);
         }
     }
 }
