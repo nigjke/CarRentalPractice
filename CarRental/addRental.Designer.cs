@@ -78,7 +78,7 @@ namespace CarRental
             this.button2.Location = new System.Drawing.Point(16, 496);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(451, 59);
-            this.button2.TabIndex = 165;
+            this.button2.TabIndex = 9;
             this.button2.Text = "Назад";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -92,7 +92,7 @@ namespace CarRental
             this.button1.Location = new System.Drawing.Point(16, 421);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(451, 59);
-            this.button1.TabIndex = 164;
+            this.button1.TabIndex = 8;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -151,7 +151,7 @@ namespace CarRental
             this.comboBoxModel.Location = new System.Drawing.Point(221, 73);
             this.comboBoxModel.Name = "comboBoxModel";
             this.comboBoxModel.Size = new System.Drawing.Size(242, 32);
-            this.comboBoxModel.TabIndex = 176;
+            this.comboBoxModel.TabIndex = 2;
             // 
             // comboBoxCustomer
             // 
@@ -163,7 +163,7 @@ namespace CarRental
             this.comboBoxCustomer.Location = new System.Drawing.Point(222, 126);
             this.comboBoxCustomer.Name = "comboBoxCustomer";
             this.comboBoxCustomer.Size = new System.Drawing.Size(242, 32);
-            this.comboBoxCustomer.TabIndex = 177;
+            this.comboBoxCustomer.TabIndex = 3;
             this.comboBoxCustomer.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomer_SelectedIndexChanged);
             // 
             // dateTimePickerRentalDate
@@ -172,7 +172,7 @@ namespace CarRental
             this.dateTimePickerRentalDate.Location = new System.Drawing.Point(222, 229);
             this.dateTimePickerRentalDate.Name = "dateTimePickerRentalDate";
             this.dateTimePickerRentalDate.Size = new System.Drawing.Size(242, 31);
-            this.dateTimePickerRentalDate.TabIndex = 180;
+            this.dateTimePickerRentalDate.TabIndex = 5;
             // 
             // dateTimePickerReturnDate
             // 
@@ -180,7 +180,7 @@ namespace CarRental
             this.dateTimePickerReturnDate.Location = new System.Drawing.Point(221, 280);
             this.dateTimePickerReturnDate.Name = "dateTimePickerReturnDate";
             this.dateTimePickerReturnDate.Size = new System.Drawing.Size(242, 31);
-            this.dateTimePickerReturnDate.TabIndex = 181;
+            this.dateTimePickerReturnDate.TabIndex = 6;
             this.dateTimePickerReturnDate.ValueChanged += new System.EventHandler(this.dateTimePickerReturnDate_ValueChanged_1);
             // 
             // label5
@@ -204,7 +204,7 @@ namespace CarRental
             this.textBoxTotalAmount.Name = "textBoxTotalAmount";
             this.textBoxTotalAmount.ReadOnly = true;
             this.textBoxTotalAmount.Size = new System.Drawing.Size(242, 32);
-            this.textBoxTotalAmount.TabIndex = 183;
+            this.textBoxTotalAmount.TabIndex = 7;
             // 
             // comboBoxMake
             // 
@@ -216,7 +216,7 @@ namespace CarRental
             this.comboBoxMake.Location = new System.Drawing.Point(221, 23);
             this.comboBoxMake.Name = "comboBoxMake";
             this.comboBoxMake.Size = new System.Drawing.Size(242, 32);
-            this.comboBoxMake.TabIndex = 184;
+            this.comboBoxMake.TabIndex = 1;
             this.comboBoxMake.SelectedIndexChanged += new System.EventHandler(this.comboBoxMake_SelectedIndexChanged_1);
             // 
             // textPhone
@@ -229,7 +229,7 @@ namespace CarRental
             this.textPhone.Name = "textPhone";
             this.textPhone.ReadOnly = true;
             this.textPhone.Size = new System.Drawing.Size(242, 32);
-            this.textPhone.TabIndex = 185;
+            this.textPhone.TabIndex = 4;
             // 
             // addRental
             // 

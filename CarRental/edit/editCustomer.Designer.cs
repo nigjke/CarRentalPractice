@@ -63,7 +63,7 @@ namespace CarRental
             this.maskedTextBox3.Mask = "00 00 000000";
             this.maskedTextBox3.Name = "maskedTextBox3";
             this.maskedTextBox3.Size = new System.Drawing.Size(188, 32);
-            this.maskedTextBox3.TabIndex = 122;
+            this.maskedTextBox3.TabIndex = 4;
             // 
             // button2
             // 
@@ -74,7 +74,7 @@ namespace CarRental
             this.button2.Location = new System.Drawing.Point(18, 411);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(451, 59);
-            this.button2.TabIndex = 124;
+            this.button2.TabIndex = 7;
             this.button2.Text = "Назад";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -88,7 +88,7 @@ namespace CarRental
             this.button1.Location = new System.Drawing.Point(18, 308);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(451, 59);
-            this.button1.TabIndex = 123;
+            this.button1.TabIndex = 6;
             this.button1.Text = "Изменить";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -102,7 +102,7 @@ namespace CarRental
             this.maskedTextBox2.Mask = "00 00 000000";
             this.maskedTextBox2.Name = "maskedTextBox2";
             this.maskedTextBox2.Size = new System.Drawing.Size(188, 32);
-            this.maskedTextBox2.TabIndex = 121;
+            this.maskedTextBox2.TabIndex = 5;
             // 
             // maskedTextBox1
             // 
@@ -113,7 +113,7 @@ namespace CarRental
             this.maskedTextBox1.Mask = "+7 (999) 000-0000";
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.Size = new System.Drawing.Size(188, 32);
-            this.maskedTextBox1.TabIndex = 120;
+            this.maskedTextBox1.TabIndex = 3;
             // 
             // label8
             // 
@@ -146,7 +146,7 @@ namespace CarRental
             this.textBox2.MaxLength = 20;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(188, 32);
-            this.textBox2.TabIndex = 119;
+            this.textBox2.TabIndex = 2;
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             this.textBox2.Leave += new System.EventHandler(this.textBox2_Leave);
             // 
@@ -181,7 +181,7 @@ namespace CarRental
             this.textBox1.MaxLength = 15;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(188, 32);
-            this.textBox1.TabIndex = 118;
+            this.textBox1.TabIndex = 1;
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 

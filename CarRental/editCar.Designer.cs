@@ -64,7 +64,7 @@
             this.maskedTextBox1.Mask = "AAA000";
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.Size = new System.Drawing.Size(188, 32);
-            this.maskedTextBox1.TabIndex = 134;
+            this.maskedTextBox1.TabIndex = 4;
             // 
             // button2
             // 
@@ -75,7 +75,7 @@
             this.button2.Location = new System.Drawing.Point(19, 411);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(451, 59);
-            this.button2.TabIndex = 136;
+            this.button2.TabIndex = 8;
             this.button2.Text = "Назад";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -89,7 +89,7 @@
             this.button1.Location = new System.Drawing.Point(18, 333);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(451, 59);
-            this.button1.TabIndex = 135;
+            this.button1.TabIndex = 7;
             this.button1.Text = "Изменить";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -125,8 +125,9 @@
             this.textBox2.MaxLength = 20;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(188, 32);
-            this.textBox2.TabIndex = 131;
+            this.textBox2.TabIndex = 2;
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
+            this.textBox2.Leave += new System.EventHandler(this.textBox2_Leave);
             // 
             // label2
             // 
@@ -159,8 +160,9 @@
             this.textBox1.MaxLength = 15;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(188, 32);
-            this.textBox1.TabIndex = 130;
+            this.textBox1.TabIndex = 1;
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
             // textBox4
             // 
@@ -171,7 +173,7 @@
             this.textBox4.MaxLength = 20;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(188, 32);
-            this.textBox4.TabIndex = 142;
+            this.textBox4.TabIndex = 6;
             this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox4_KeyPress);
             // 
             // label4
@@ -196,7 +198,7 @@
             this.comboBox1.Location = new System.Drawing.Point(282, 226);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(187, 32);
-            this.comboBox1.TabIndex = 144;
+            this.comboBox1.TabIndex = 5;
             // 
             // textBox3
             // 
@@ -207,7 +209,7 @@
             this.textBox3.MaxLength = 20;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(188, 32);
-            this.textBox3.TabIndex = 145;
+            this.textBox3.TabIndex = 3;
             this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // editCar

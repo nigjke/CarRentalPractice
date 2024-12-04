@@ -188,7 +188,7 @@
             this.reportBtn.Name = "reportBtn";
             this.reportBtn.Size = new System.Drawing.Size(204, 61);
             this.reportBtn.TabIndex = 11;
-            this.reportBtn.Text = "Создать отчет";
+            this.reportBtn.Text = "Создание отчета";
             this.reportBtn.UseVisualStyleBackColor = false;
             // 
             // exitBtn
