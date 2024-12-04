@@ -19,7 +19,6 @@ namespace CarRental
         private db db;
         public int des1;
         string connect = db.connect;
-        private db db;
         public addEmployee()
         {
             db = new db();

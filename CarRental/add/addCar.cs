@@ -17,7 +17,6 @@ namespace CarRental
     {
         private db db;
         string connect = db.connect;
-        private db db;
         public addCar()
         {
             db = new db();
@@ -85,6 +84,15 @@ namespace CarRental
             if (!db.CharCorrectEng(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!db.CharCorrectNum(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+
             }
         }
     }
