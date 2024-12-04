@@ -70,7 +70,7 @@ namespace CarRental
                 e.Handled = true;
             }
         }
-
+        f
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!db.CharCorrectEng(e.KeyChar) && !char.IsControl(e.KeyChar))
