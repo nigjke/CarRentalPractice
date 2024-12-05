@@ -98,6 +98,12 @@
     <Compile Include="editEmployee.Designer.cs">
       <DependentUpon>editEmployee.cs</DependentUpon>
     </Compile>
+    <Compile Include="editRental.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="editRental.Designer.cs">
+      <DependentUpon>editRental.cs</DependentUpon>
+    </Compile>
     <Compile Include="edit\editCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="editEmployee.resx">
       <DependentUpon>editEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="editRental.resx">
+      <DependentUpon>editRental.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="edit\editCustomer.resx">
       <DependentUpon>editCustomer.cs</DependentUpon>

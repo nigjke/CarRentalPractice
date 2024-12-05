@@ -174,8 +174,9 @@
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(204, 61);
             this.button9.TabIndex = 29;
-            this.button9.Text = "Удалить";
+            this.button9.Text = "Создание чека";
             this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // exitBtn
             // 
@@ -363,6 +364,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(937, 521);
             this.dataGridView1.TabIndex = 34;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick_1);
             // 
             // managerForm
             // 

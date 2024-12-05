@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace CarRental
 {
@@ -15,6 +17,7 @@ namespace CarRental
     {
         private db db;
         private static string table = string.Empty;
+        private DataGridViewRow selectedRow;
         public managerForm(string labelLog)
         {
             db = new db();
@@ -111,7 +114,6 @@ namespace CarRental
             button7.Visible = true;
             button8.Visible = true;
             button9.Visible = true;
-            button9.Text = "Создание чека";
             button4.BackColor = Color.FromArgb(92, 96, 255);
             button4.ForeColor = Color.FromArgb(34, 36, 49);
             button2.BackColor = Color.FromArgb(34, 36, 49);
@@ -184,10 +186,10 @@ namespace CarRental
                         LoadData();
                     }
                 }
-                else if (table == "cars")
-                {
-                    editCar editCar = new editCar(selectedRow);
-                    if (editCar.ShowDialog() == DialogResult.OK)
+                else
+                    { 
+                    editRental editRental = new editRental(selectedRow);
+                    if (editRental.ShowDialog() == DialogResult.OK)
                     {
                         LoadData();
                     }
@@ -375,6 +377,55 @@ namespace CarRental
                 {
                     dataGridView1.Sort(dataGridView1.Columns["Роль"], System.ComponentModel.ListSortDirection.Descending);
                 }
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (selectedRow != null)
+            {
+                CreateWordReport(selectedRow);
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите строку.");
+            }
+        }
+        private void CreateWordReport(DataGridViewRow row)
+        {
+            string templatePath = Directory.GetCurrentDirectory() + @"\template\template.docx";
+            Word.Application wordApp = new Word.Application();
+            Word.Document doc = wordApp.Documents.Add(templatePath);
+
+            try
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    string bookmarkName = cell.OwningColumn.HeaderText.Replace(" ", "_");
+                    if (doc.Bookmarks.Exists(bookmarkName))
+                    {
+                        doc.Bookmarks[bookmarkName].Range.Text = cell.Value.ToString();
+                    }
+                }
+
+                wordApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                doc = null;
+                wordApp = null;
+            }
+        }
+
+        private void dataGridView1_CellClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRow = dataGridView1.Rows[e.RowIndex];
             }
         }
     }

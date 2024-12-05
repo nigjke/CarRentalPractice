@@ -76,7 +76,7 @@ namespace CarRental
                 using (MySqlConnection connection = new MySqlConnection(db.connect))
                 {
                     connection.Open();
-                    MySqlCommand command = new MySqlCommand($"UPDATE employee SET Role_id = '{des1}', firstName = @firstName, lastName = @lastName, phone = @phone, employeeLogin = @employeeLogin, employeePass = @employeePass WHERE employeePass = @employeePass", connection);
+                    MySqlCommand command = new MySqlCommand($"UPDATE employee SET Role_id = {des1}, firstName = @firstName, lastName = @lastName, phone = @phone, employeeLogin = @employeeLogin, employeePass = @employeePass WHERE employeePass = @employeePass", connection);
                     command.Parameters.AddWithValue(Convert.ToString(des1), role);
                     command.Parameters.AddWithValue("@firstName", firstName);
                     command.Parameters.AddWithValue("@lastName", lastName);
