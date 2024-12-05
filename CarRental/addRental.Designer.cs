@@ -29,6 +29,7 @@ namespace CarRental
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addRental));
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -168,6 +169,7 @@ namespace CarRental
             // 
             // dateTimePickerRentalDate
             // 
+            this.dateTimePickerRentalDate.Enabled = false;
             this.dateTimePickerRentalDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dateTimePickerRentalDate.Location = new System.Drawing.Point(222, 229);
             this.dateTimePickerRentalDate.Name = "dateTimePickerRentalDate";
@@ -255,11 +257,11 @@ namespace CarRental
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "addRental";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "addRental";
-            this.Load += new System.EventHandler(this.addRental_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

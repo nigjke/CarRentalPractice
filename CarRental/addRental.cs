@@ -11,37 +11,57 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace CarRental
 {
     public partial class addRental : Form
     {
         private db db;
+        private System.Windows.Forms.Timer rentalCheckTimer;
         public addRental()
         {
             db = new db();
             InitializeComponent();
             LoadComboBoxes();
+            dateTimePickerReturnDate.MinDate = DateTime.Now.AddDays(1);
+            dateTimePickerReturnDate.MaxDate = DateTime.Now.AddYears(2);
+
+            rentalCheckTimer = new System.Windows.Forms.Timer();
+            rentalCheckTimer.Interval = 60000;
+            rentalCheckTimer.Tick += new EventHandler(CheckRentals);
+            rentalCheckTimer.Start();
         }
         string connectionString = db.connect;
         private void LoadComboBoxes()
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string queryMake = "SELECT DISTINCT make FROM cars";
+                string queryMake = "SELECT DISTINCT make FROM cars WHERE status = 'Свободна'";
                 MySqlDataAdapter adapterMake = new MySqlDataAdapter(queryMake, connection);
                 DataTable dataTableMake = new DataTable();
                 adapterMake.Fill(dataTableMake);
                 comboBoxMake.DataSource = dataTableMake;
                 comboBoxMake.DisplayMember = "make";
 
-                string queryCustomers = "SELECT customer_id, last_name,phone FROM customers";
+                string queryCustomers = "SELECT customer_id, last_name, phone FROM customers";
                 MySqlDataAdapter adapterCustomers = new MySqlDataAdapter(queryCustomers, connection);
                 DataTable dataTableCustomers = new DataTable();
                 adapterCustomers.Fill(dataTableCustomers);
                 comboBoxCustomer.DataSource = dataTableCustomers;
                 comboBoxCustomer.DisplayMember = "last_name";
                 comboBoxCustomer.ValueMember = "customer_id";
+            }
+        }
+        private void CheckRentals(object sender, EventArgs e)
+        {
+            string connectionString = db.connect;
+            string query = "UPDATE cars SET status = 'Свободна' WHERE car_id IN (SELECT car_id FROM rentals WHERE return_date < NOW() AND status = 'Занята')";
 
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
             }
         }
         private void CalculateTotalAmount()
@@ -53,13 +73,6 @@ namespace CarRental
             DateTime rentalDate = dateTimePickerRentalDate.Value;
             DateTime returnDate = dateTimePickerReturnDate.Value;
             int days = (returnDate - rentalDate).Days;
-
-            if (days < 1)
-            {
-                MessageBox.Show("Количество суток не может быть меньше 1 дня.");
-                return;
-            }
-
             string selectedModel = comboBoxModel.Text;
             string connectionString = db.connect;
             string queryPrice = "SELECT price FROM cars WHERE model = @model";
@@ -101,7 +114,7 @@ namespace CarRental
         private void comboBoxMake_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             string selectedMake = comboBoxMake.Text;
-            string queryModel = "SELECT model FROM cars WHERE make = @make";
+            string queryModel = "SELECT model FROM cars WHERE make = @make AND status = 'Свободна'";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -133,6 +146,11 @@ namespace CarRental
 
                     connection.Open();
                     command.ExecuteNonQuery();
+
+                    string updateStatusQuery = "UPDATE cars SET status = 'Занята' WHERE car_id = @car_id";
+                    MySqlCommand updateStatusCommand = new MySqlCommand(updateStatusQuery, connection);
+                    updateStatusCommand.Parameters.AddWithValue("@car_id", GetCarId(comboBoxMake.Text, comboBoxModel.Text));
+                    updateStatusCommand.ExecuteNonQuery();
                 }
 
                 this.Close();
@@ -151,11 +169,6 @@ namespace CarRental
         private void dateTimePickerReturnDate_ValueChanged_1(object sender, EventArgs e)
         {
             CalculateTotalAmount();
-        }
-
-        private void addRental_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void comboBoxCustomer_SelectedIndexChanged(object sender, EventArgs e)

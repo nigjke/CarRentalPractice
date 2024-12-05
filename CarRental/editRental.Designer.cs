@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(editRental));
             this.textPhone = new System.Windows.Forms.TextBox();
             this.comboBoxMake = new System.Windows.Forms.ComboBox();
             this.textBoxTotalAmount = new System.Windows.Forms.TextBox();
@@ -69,6 +70,7 @@
             this.comboBoxMake.Name = "comboBoxMake";
             this.comboBoxMake.Size = new System.Drawing.Size(242, 32);
             this.comboBoxMake.TabIndex = 183;
+            this.comboBoxMake.SelectedIndexChanged += new System.EventHandler(this.comboBoxMake_SelectedIndexChanged);
             // 
             // textBoxTotalAmount
             // 
@@ -100,6 +102,7 @@
             this.dateTimePickerReturnDate.Name = "dateTimePickerReturnDate";
             this.dateTimePickerReturnDate.Size = new System.Drawing.Size(242, 31);
             this.dateTimePickerReturnDate.TabIndex = 188;
+            this.dateTimePickerReturnDate.ValueChanged += new System.EventHandler(this.dateTimePickerReturnDate_ValueChanged);
             // 
             // dateTimePickerRentalDate
             // 
@@ -120,6 +123,7 @@
             this.comboBoxCustomer.Name = "comboBoxCustomer";
             this.comboBoxCustomer.Size = new System.Drawing.Size(242, 32);
             this.comboBoxCustomer.TabIndex = 185;
+            this.comboBoxCustomer.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomer_SelectedIndexChanged);
             // 
             // comboBoxModel
             // 
@@ -132,6 +136,7 @@
             this.comboBoxModel.Name = "comboBoxModel";
             this.comboBoxModel.Size = new System.Drawing.Size(242, 32);
             this.comboBoxModel.TabIndex = 184;
+            this.comboBoxModel.SelectedIndexChanged += new System.EventHandler(this.comboBoxModel_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -251,6 +256,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "editRental";
             this.Text = "editRental";
             this.ResumeLayout(false);

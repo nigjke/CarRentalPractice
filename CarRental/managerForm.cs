@@ -27,12 +27,6 @@ namespace CarRental
             dataGridView1.MultiSelect = false;
             dataGridView1.CellClick += dataGridView1_CellClick;
         }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             button7.Visible = false;
@@ -74,9 +68,9 @@ namespace CarRental
             comboBox1.Items.Clear();
             comboBox1.Items.Add("По Имени");
             comboBox1.Items.Add("По Фамилии");
-            comboBox1.Items.Add("По Почте");
             comboBox1.Items.Add("По Телефону");
             comboBox1.Items.Add("По Вод.Удостоверению");
+            comboBox1.Items.Add("По Паспорту");
             string query = "SELECT first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', driver_license as 'Вод.Удостоверение', passport as 'Паспорт' FROM customers";
             table = "customers";
             db.MySqlReturnData(query, dataGridView1);
@@ -101,6 +95,9 @@ namespace CarRental
                 else if (table == "cars")
                 {
                     query = "SELECT make as 'Марка', model as 'Модель', year as 'Год выпуска', license_plate as 'Гос.Номер', status as 'Статус' , price 'Цена за сутки' FROM cars";
+                }else if (table == "rentals")
+                {
+                    query = "Select make as 'Марка', model as 'Модель', first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', rental_date as 'Дата взятия', return_date as 'Дата возврата', total_amount as 'Сумма' FROM carrental.rentals inner join customers on rentals.customer_id = customers.customer_id inner join cars on cars.car_id = rentals.car_id; ";
                 }
                 MySqlCommand command = new MySqlCommand(query, connection);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
@@ -123,10 +120,12 @@ namespace CarRental
             textBox1.Text = "Поиск";
             label2.Text = "Аренды";
             comboBox1.Items.Clear();
-            comboBox1.Items.Add("По клиенту");
-            comboBox1.Items.Add("По машине");
+            comboBox1.Items.Add("По имени");
+            comboBox1.Items.Add("По фамилии");
+            comboBox1.Items.Add("По телефону");
+            comboBox1.Items.Add("По марке");
+            comboBox1.Items.Add("По моделе"); ;
             comboBox1.Items.Add("По дате взятия");
-            comboBox1.Items.Add("По менеджеру");
             comboBox1.Items.Add("По дате возврата");
             comboBox1.Items.Add("По сумме");
             string query = "Select make as 'Марка', model as 'Модель', first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', rental_date as 'Дата взятия', return_date as 'Дата возврата', total_amount as 'Сумма' FROM carrental.rentals inner join customers on rentals.customer_id = customers.customer_id inner join cars on cars.car_id = rentals.car_id; ";
@@ -150,13 +149,13 @@ namespace CarRental
             {
                 addCustomer addCustomer = new addCustomer();
                 addCustomer.ShowDialog();
-                LoadData();
             }
             else if (table == "rentals")
             {
                 addRental addRental = new addRental(); 
                 addRental.ShowDialog();
             }
+            LoadData();
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -187,8 +186,9 @@ namespace CarRental
                     }
                 }
                 else
-                    { 
-                    editRental editRental = new editRental(selectedRow);
+                    {
+                    DataRow selectedRows = ((DataRowView)dataGridView1.SelectedRows[0].DataBoundItem).Row;
+                    editRental editRental = new editRental(selectedRows);
                     if (editRental.ShowDialog() == DialogResult.OK)
                     {
                         LoadData();
@@ -306,14 +306,38 @@ namespace CarRental
             {
                 if (comboBox1.SelectedIndex == 0)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Логин"], System.ComponentModel.ListSortDirection.Ascending);
+                    dataGridView1.Sort(dataGridView1.Columns["Марка"], System.ComponentModel.ListSortDirection.Ascending);
                 }
                 if (comboBox1.SelectedIndex == 1)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Роль"], System.ComponentModel.ListSortDirection.Ascending);
+                    dataGridView1.Sort(dataGridView1.Columns["Модель"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 2)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Имя"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 3)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Фамилия"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 4)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Телефон"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 5)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Дата взятия"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 6)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Дата возврата"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 7)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Сумма"], System.ComponentModel.ListSortDirection.Ascending);
                 }
             }
-        }
+}
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -371,11 +395,35 @@ namespace CarRental
             {
                 if (comboBox1.SelectedIndex == 0)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Логин"], System.ComponentModel.ListSortDirection.Descending);
+                    dataGridView1.Sort(dataGridView1.Columns["Марка"], System.ComponentModel.ListSortDirection.Descending);
                 }
                 if (comboBox1.SelectedIndex == 1)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Роль"], System.ComponentModel.ListSortDirection.Descending);
+                    dataGridView1.Sort(dataGridView1.Columns["Модель"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 2)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Имя"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 3)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Фамилия"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 4)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Телефон"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 5)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Дата взятия"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 6)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Дата возврата"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 7)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Сумма"], System.ComponentModel.ListSortDirection.Descending);
                 }
             }
         }

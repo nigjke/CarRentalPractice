@@ -29,10 +29,9 @@ namespace CarRental
             textBox2.Text = selectedRow.Cells["Модель"].Value.ToString();
             textBox3.Text = selectedRow.Cells["Год выпуска"].Value.ToString();
             maskedTextBox1.Text = selectedRow.Cells["Гос.Номер"].Value.ToString();
-            comboBox1.SelectedItem = selectedRow.Cells["Статус"].Value.ToString();
             textBox4.Text = selectedRow.Cells["Цена за сутки"].Value.ToString();
         }
-        private void UpdateDatabase(string make, string model, string year, string license_plate, object status, string price)
+        private void UpdateDatabase(string make, string model, string year, string license_plate, string price)
         {
 
             using (MySqlConnection connection = new MySqlConnection(db.connect))
@@ -43,7 +42,6 @@ namespace CarRental
                 command.Parameters.AddWithValue("@model", model);
                 command.Parameters.AddWithValue("@year", year);
                 command.Parameters.AddWithValue("@license_plate", license_plate);
-                command.Parameters.AddWithValue("@status", status);
                 command.Parameters.AddWithValue("@price", price);
                 command.ExecuteNonQuery();
             }
@@ -52,7 +50,7 @@ namespace CarRental
         {
             if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && maskedTextBox1.Text != "" && textBox4.Text != "")
             {
-                UpdateDatabase(textBox1.Text, textBox2.Text, textBox3.Text, maskedTextBox1.Text, comboBox1.SelectedItem, textBox4.Text);
+                UpdateDatabase(textBox1.Text, textBox2.Text, textBox3.Text, maskedTextBox1.Text, textBox4.Text);
                 DialogResult = DialogResult.OK;
                 Close();
                 textBox1.Text = "";
