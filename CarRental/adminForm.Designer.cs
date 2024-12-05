@@ -190,6 +190,7 @@
             this.reportBtn.TabIndex = 11;
             this.reportBtn.Text = "Создание отчета";
             this.reportBtn.UseVisualStyleBackColor = false;
+            this.reportBtn.Click += new System.EventHandler(this.reportBtn_Click);
             // 
             // exitBtn
             // 

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Runtime.Remoting.Contexts;
@@ -13,11 +14,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static Mysqlx.Notice.Frame.Types;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace CarRental
 {
     public partial class adminForm : Form
     {
+        private readonly string FileName = Directory.GetCurrentDirectory() + @"\template\template1.docx";
         private db db;
         private static string table = string.Empty;
         public adminForm(string labelLog)
@@ -543,5 +547,63 @@ namespace CarRental
             }
             return false;
         }
+
+        private void reportBtn_Click(object sender, EventArgs e)
+        {
+            try
+            { 
+                string id = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+
+                MySqlConnection connection = new MySqlConnection(db.connect);
+                DataTable dt1 = new DataTable();
+                connection.Open();
+                MySqlCommand sql1 = new MySqlCommand($"Select rental_id, make as 'Марка', model as 'Модель', first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', rental_date as 'Дата взятия', return_date as 'Дата возврата', total_amount as 'Сумма' FROM carrental.rentals inner join customers on rentals.customer_id = customers.customer_id inner join cars on cars.car_id = rentals.car_id WHERE rental_id= {Convert.ToInt32(id)};");
+                sql1.Connection = connection;
+                sql1.ExecuteNonQuery();
+
+                MySqlDataAdapter da1 = new MySqlDataAdapter(sql1);
+                da1.Fill(dt1);
+                string make = dt1.Rows[0].ItemArray.GetValue(1).ToString();
+                string model = dt1.Rows[0].ItemArray.GetValue(2).ToString();
+                string datePick = dt1.Rows[0].ItemArray.GetValue(6).ToString();
+                string dateReturn = dt1.Rows[0].ItemArray.GetValue(7).ToString();
+                string client = dt1.Rows[0].ItemArray.GetValue(5).ToString();
+                string total = dt1.Rows[0].ItemArray.GetValue(8).ToString();
+
+                var wordApp = new Word.Application();
+                wordApp.Visible = false;
+
+                try
+                {
+                    var wordDocument = wordApp.Documents.Open(FileName);
+
+                    ReplaceWordStub("{make}", make, wordDocument);
+                    ReplaceWordStub("{model}", model, wordDocument);
+                    ReplaceWordStub("{datePick}", datePick, wordDocument);
+                    ReplaceWordStub("{dateReturn}", dateReturn, wordDocument);
+                    ReplaceWordStub("{client}", client, wordDocument);
+                    ReplaceWordStub("{total}", total, wordDocument);
+
+                    wordApp.Visible = true;
+                    button5.Enabled = false;
+                    button5.BackColor = Color.White;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+        private void ReplaceWordStub(string stubToReplace, string text, Word.Document wordDocument)
+        {
+            var range = wordDocument.Content;
+            range.Find.ClearFormatting();
+            range.Find.Execute(FindText: stubToReplace, ReplaceWith: text);
+        }
+        int id_order = 0;
     }
 }
