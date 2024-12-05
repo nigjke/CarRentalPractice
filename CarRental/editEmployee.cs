@@ -76,7 +76,7 @@ namespace CarRental
                 using (MySqlConnection connection = new MySqlConnection(db.connect))
                 {
                     connection.Open();
-                    MySqlCommand command = new MySqlCommand($"UPDATE employee SET Role_id = '{des1}', firstName = @firstName, lastName = @lastName, phone = @phone, employeeLogin = @employeeLogin, employeePass = @employeePass WHERE employeePass = @employeePass", connection);
+                    MySqlCommand command = new MySqlCommand($"UPDATE employee SET Role_id = {des1}, firstName = @firstName, lastName = @lastName, phone = @phone, employeeLogin = @employeeLogin, employeePass = @employeePass WHERE employeePass = @employeePass", connection);
                     command.Parameters.AddWithValue(Convert.ToString(des1), role);
                     command.Parameters.AddWithValue("@firstName", firstName);
                     command.Parameters.AddWithValue("@lastName", lastName);
@@ -133,12 +133,14 @@ namespace CarRental
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            textBox1.Text = char.ToUpper(textBox1.Text[0]) + textBox1.Text.Substring(1);
+            if (!string.IsNullOrEmpty(textBox1.Text))
+                textBox1.Text = char.ToUpper(textBox1.Text[0]) + textBox1.Text.Substring(1);
         }
 
         private void textBox2_Leave(object sender, EventArgs e)
         {
-            textBox2.Text = char.ToUpper(textBox2.Text[0]) + textBox2.Text.Substring(1);
+            if (!string.IsNullOrEmpty(textBox2.Text))
+                textBox2.Text = char.ToUpper(textBox2.Text[0]) + textBox2.Text.Substring(1);
         }
     }
 }

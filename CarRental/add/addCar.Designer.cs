@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addCar));
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -53,7 +54,8 @@
             this.textBox3.MaxLength = 20;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(188, 32);
-            this.textBox3.TabIndex = 159;
+            this.textBox3.TabIndex = 3;
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // comboBox1
             // 
@@ -67,7 +69,7 @@
             this.comboBox1.Location = new System.Drawing.Point(281, 222);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(187, 32);
-            this.comboBox1.TabIndex = 158;
+            this.comboBox1.TabIndex = 5;
             this.comboBox1.Text = "available";
             // 
             // textBox4
@@ -79,7 +81,8 @@
             this.textBox4.MaxLength = 20;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(188, 32);
-            this.textBox4.TabIndex = 156;
+            this.textBox4.TabIndex = 6;
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox4_KeyPress);
             // 
             // label4
             // 
@@ -112,8 +115,7 @@
             this.maskedTextBox1.Mask = "AAA000";
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.Size = new System.Drawing.Size(188, 32);
-            this.maskedTextBox1.TabIndex = 148;
-            this.maskedTextBox1.Leave += new System.EventHandler(this.maskedTextBox1_Leave);
+            this.maskedTextBox1.TabIndex = 3;
             // 
             // button2
             // 
@@ -124,7 +126,7 @@
             this.button2.Location = new System.Drawing.Point(18, 407);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(451, 59);
-            this.button2.TabIndex = 150;
+            this.button2.TabIndex = 8;
             this.button2.Text = "Назад";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
@@ -138,7 +140,7 @@
             this.button1.Location = new System.Drawing.Point(17, 329);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(451, 59);
-            this.button1.TabIndex = 149;
+            this.button1.TabIndex = 7;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
@@ -174,7 +176,7 @@
             this.textBox2.MaxLength = 20;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(188, 32);
-            this.textBox2.TabIndex = 147;
+            this.textBox2.TabIndex = 2;
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             this.textBox2.Leave += new System.EventHandler(this.textBox2_Leave);
             // 
@@ -209,7 +211,7 @@
             this.textBox1.MaxLength = 15;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(188, 32);
-            this.textBox1.TabIndex = 146;
+            this.textBox1.TabIndex = 1;
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
@@ -236,6 +238,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "addCar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "addCar";

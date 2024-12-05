@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Runtime.Remoting.Contexts;
@@ -13,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static Mysqlx.Notice.Frame.Types;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace CarRental
 {
@@ -20,6 +23,7 @@ namespace CarRental
     {
         private db db;
         private static string table = string.Empty;
+        private DataGridViewRow selectedRow;
         public adminForm(string labelLog)
         {
             db = new db();
@@ -65,6 +69,7 @@ namespace CarRental
             string query = "SELECT make as 'Марка', model as 'Модель', year as 'Год выпуска', license_plate as 'Гос.Номер', status as 'Статус', price 'Цена за сутки' FROM cars";
             table = "cars";
             db.MySqlReturnData(query, dataGridView1);
+            reportBtn.Enabled = false;
 
         }
 
@@ -83,15 +88,16 @@ namespace CarRental
             comboBox1.Items.Clear();
             comboBox1.Items.Add("По Имени");
             comboBox1.Items.Add("По Фамилии");
-            comboBox1.Items.Add("По Почте");
             comboBox1.Items.Add("По Телефону");
             comboBox1.Items.Add("По Вод.Удостоверению");
+            comboBox1.Items.Add("По Паспорту");
             string query = "SELECT first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', driver_license as 'Вод.Удостоверение', passport as 'Паспорт' FROM customers";
             table = "customers";
             db.MySqlReturnData(query, dataGridView1);
             button7.Visible = false;
             button8.Visible = false;
             button9.Visible = false;
+            reportBtn.Enabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -119,6 +125,7 @@ namespace CarRental
             button7.Visible = true;
             button8.Visible = true;
             button9.Visible = true;
+            reportBtn.Enabled = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -137,15 +144,16 @@ namespace CarRental
             comboBox1.Items.Add("По Имени");
             comboBox1.Items.Add("По Фамилии");
             comboBox1.Items.Add("По Телефону");
+            comboBox1.Items.Add("По Роле");
             comboBox1.Items.Add("По Логину");
             comboBox1.Items.Add("По Паролю");
-            comboBox1.Items.Add("По Роле");
             string query = "SELECT employee.firstName as 'Имя', employee.lastName as 'Фамилия', employee.phone as 'Телефон', role.name as 'Роль', employee.employeeLogin as 'Логин', employee.employeePass as 'Пароль' FROM employee JOIN role ON employee.Role_id=role.Role_id";
             table = "employee";
             db.MySqlReturnData(query, dataGridView1);
             button7.Visible = true;
             button8.Visible = true;
             button9.Visible = true;
+            reportBtn.Enabled = false;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -161,10 +169,12 @@ namespace CarRental
             textBox1.Text = "Поиск";
             label2.Text = "Аренды";
             comboBox1.Items.Clear();
-            comboBox1.Items.Add("По клиенту");
-            comboBox1.Items.Add("По машине");
+            comboBox1.Items.Add("По имени");
+            comboBox1.Items.Add("По фамилии");
+            comboBox1.Items.Add("По телефону");
+            comboBox1.Items.Add("По марке");
+            comboBox1.Items.Add("По моделе");;
             comboBox1.Items.Add("По дате взятия");
-            comboBox1.Items.Add("По менеджеру");
             comboBox1.Items.Add("По дате возврата");
             comboBox1.Items.Add("По сумме");
             string query = "Select make as 'Марка', model as 'Модель', first_name as 'Имя', last_name as 'Фамилия', phone as 'Телефон', rental_date as 'Дата взятия', return_date as 'Дата возврата', total_amount as 'Сумма' FROM carrental.rentals inner join customers on rentals.customer_id = customers.customer_id inner join cars on cars.car_id = rentals.car_id; ";
@@ -173,6 +183,7 @@ namespace CarRental
             button7.Visible = false;
             button8.Visible = false;
             button9.Visible = false;
+            reportBtn.Enabled = true;
         }
         private void button5_Click(object sender, EventArgs e)
         {
@@ -253,11 +264,35 @@ namespace CarRental
             {
                 if (comboBox1.SelectedIndex == 0)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Логин"], System.ComponentModel.ListSortDirection.Descending);
+                    dataGridView1.Sort(dataGridView1.Columns["Марка"], System.ComponentModel.ListSortDirection.Descending);
                 }
                 if (comboBox1.SelectedIndex == 1)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Роль"], System.ComponentModel.ListSortDirection.Descending);
+                    dataGridView1.Sort(dataGridView1.Columns["Модель"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 2)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Имя"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 3)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Фамилия"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 4)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Телефон"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 5)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Дата взятия"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 6)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Дата возврата"], System.ComponentModel.ListSortDirection.Descending);
+                }
+                if (comboBox1.SelectedIndex == 7)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Сумма"], System.ComponentModel.ListSortDirection.Descending);
                 }
             }
         }
@@ -329,9 +364,13 @@ namespace CarRental
                 }
                 if (comboBox1.SelectedIndex == 3)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Логин"], System.ComponentModel.ListSortDirection.Ascending);
+                    dataGridView1.Sort(dataGridView1.Columns["Роль"], System.ComponentModel.ListSortDirection.Ascending);
                 }
                 if (comboBox1.SelectedIndex == 4)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Логин"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 5)
                 {
                     dataGridView1.Sort(dataGridView1.Columns["Пароль"], System.ComponentModel.ListSortDirection.Ascending);
                 }
@@ -340,11 +379,35 @@ namespace CarRental
             {
                 if (comboBox1.SelectedIndex == 0)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Логин"], System.ComponentModel.ListSortDirection.Ascending);
+                    dataGridView1.Sort(dataGridView1.Columns["Марка"], System.ComponentModel.ListSortDirection.Ascending);
                 }
                 if (comboBox1.SelectedIndex == 1)
                 {
-                    dataGridView1.Sort(dataGridView1.Columns["Роль"], System.ComponentModel.ListSortDirection.Ascending);
+                    dataGridView1.Sort(dataGridView1.Columns["Модель"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 2)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Имя"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 3)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Фамилия"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 4)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Телефон"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 5)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Дата взятия"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 6)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Дата возврата"], System.ComponentModel.ListSortDirection.Ascending);
+                }
+                if (comboBox1.SelectedIndex == 7)
+                {
+                    dataGridView1.Sort(dataGridView1.Columns["Сумма"], System.ComponentModel.ListSortDirection.Ascending);
                 }
             }
         }
@@ -473,7 +536,7 @@ namespace CarRental
         {
             if (e.RowIndex >= 0)
             {
-                dataGridView1.Rows[e.RowIndex].Selected = true;
+                selectedRow = dataGridView1.Rows[e.RowIndex];
             }
         }
         private void DeleteRowFromDatabase(DataGridViewRow row)
@@ -546,8 +609,4 @@ namespace CarRental
 
         private void reportBtn_Click(object sender, EventArgs e)
         {
-            sysAdminForm sysAdminForm = new sysAdminForm();
-            sysAdminForm.ShowDialog();
-        }
-    }
-}
+

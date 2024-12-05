@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(managerForm));
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -141,7 +142,6 @@
             this.label4.Size = new System.Drawing.Size(176, 22);
             this.label4.TabIndex = 18;
             this.label4.Text = "Форма менеджера";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label1
             // 
@@ -174,8 +174,9 @@
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(204, 61);
             this.button9.TabIndex = 29;
-            this.button9.Text = "Удалить";
+            this.button9.Text = "Создание чека";
             this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // exitBtn
             // 
@@ -363,6 +364,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(937, 521);
             this.dataGridView1.TabIndex = 34;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick_1);
             // 
             // managerForm
             // 
@@ -385,6 +387,7 @@
             this.Controls.Add(this.button5);
             this.Controls.Add(this.comboBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "managerForm";

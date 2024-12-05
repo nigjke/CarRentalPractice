@@ -16,11 +16,12 @@ namespace CarRental
 {
     public partial class addEmployee : Form
     {
+        private db db;
         public int des1;
         string connect = db.connect;
-        private db db;
         public addEmployee()
         {
+            db = new db();
             InitializeComponent();
             db = new db();
         }
@@ -137,16 +138,6 @@ namespace CarRental
             textBox4.Text = CreatePassword(15);
         }
 
-        private void textBox1_Leave(object sender, EventArgs e)
-        {
-            textBox1.Text = char.ToUpper(textBox1.Text[0]) + textBox1.Text.Substring(1);
-        }
-
-        private void textBox2_Leave(object sender, EventArgs e)
-        {
-            textBox2.Text = char.ToUpper(textBox2.Text[0]) + textBox2.Text.Substring(1);
-        }
-
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!db.CharCorrectRus(e.KeyChar) && !char.IsControl(e.KeyChar))
@@ -161,6 +152,34 @@ namespace CarRental
             {
                 e.Handled = true;
             }
+        }
+
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!db.CharCorrectEng(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!db.CharCorrectEng(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox1.Text))
+                textBox1.Text = char.ToUpper(textBox1.Text[0]) + textBox1.Text.Substring(1);
+        }
+
+        private void textBox2_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox2.Text))
+                textBox2.Text = char.ToUpper(textBox2.Text[0]) + textBox2.Text.Substring(1);
         }
     }
 }

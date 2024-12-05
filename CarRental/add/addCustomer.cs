@@ -68,12 +68,14 @@ namespace CarRental
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            textBox1.Text = char.ToUpper(textBox1.Text[0]) + textBox1.Text.Substring(1);
+            if (!string.IsNullOrEmpty(textBox2.Text))
+                textBox1.Text = char.ToUpper(textBox1.Text[0]) + textBox1.Text.Substring(1);
         }
 
         private void textBox2_Leave(object sender, EventArgs e)
         {
-            textBox2.Text = char.ToUpper(textBox2.Text[0]) + textBox2.Text.Substring(1);
+            if (!string.IsNullOrEmpty(textBox2.Text))
+                textBox2.Text = char.ToUpper(textBox2.Text[0]) + textBox2.Text.Substring(1);
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
