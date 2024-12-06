@@ -609,43 +609,4 @@ namespace CarRental
 
         private void reportBtn_Click(object sender, EventArgs e)
         {
-            if (selectedRow != null)
-            {
-                CreateWordReport(selectedRow);
-            }
-            else
-            {
-                MessageBox.Show("Пожалуйста, выберите строку.");
-            }
-        }
-        private void CreateWordReport(DataGridViewRow row)
-        {
-            string templatePath = Directory.GetCurrentDirectory() + @"\template\template1.docx";
-            Word.Application wordApp = new Word.Application();
-            Word.Document doc = wordApp.Documents.Add(templatePath);
 
-            try
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    string bookmarkName = cell.OwningColumn.HeaderText.Replace(" ", "_");
-                    if (doc.Bookmarks.Exists(bookmarkName))
-                    {
-                        doc.Bookmarks[bookmarkName].Range.Text = cell.Value.ToString();
-                    }
-                }
-
-                wordApp.Visible = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                doc = null;
-                wordApp = null;
-            }
-        }
-    }
-}
