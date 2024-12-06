@@ -70,7 +70,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(187, 32);
             this.comboBox1.TabIndex = 5;
-            this.comboBox1.Text = "available";
+            this.comboBox1.Text = "Свободна";
             // 
             // textBox4
             // 
